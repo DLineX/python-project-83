@@ -14,6 +14,7 @@ load_dotenv()
 DATABASE_URL = os.getenv('DATABASE_URL')
 conn = psycopg2.connect(DATABASE_URL)
 
+
 @app.route('/')
 def main():
     return render_template('index.html')
