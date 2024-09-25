@@ -5,7 +5,7 @@ description = "Page Analyzer"
 authors = ["DaniilIslamgaliev <dante9226@mail.ru>"]
 readme = "README.md"
 packages = [
-  { include = "page_analyzer" },
+  { include = "page_analyzerr" },
 ]
 
 [tool.poetry.dependencies]
