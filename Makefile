@@ -8,4 +8,4 @@ lint:
 	poetry run flake8 page_analyzerr
 PORT ?= 8000
 start:
-	python -m poetry run gunicorn -w 5 -b 0.0.0.0:$(PORT) page_analyzerr:app
+	gunicorn -w 5 -b 0.0.0.0:$(PORT) 'page_analyzerr:app'
