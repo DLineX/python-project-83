@@ -1,6 +1,5 @@
 install:
 	pip install -r requirements.txt
-	export PATH="/opt/render/project/poetry/bin:$PATH"
 build:
 	./build.sh
 dev:
