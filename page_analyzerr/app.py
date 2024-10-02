@@ -170,7 +170,7 @@ def check_url(id, status_code, h1, title, description):
         )
 
 
-@app.post('urls/<id>/checks')
+@app.post('/urls/<id>/checks')
 def url_check(id):
     try:
         requests.get(find_url(id)["name"]).raise_for_status()
