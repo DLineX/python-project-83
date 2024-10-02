@@ -9,6 +9,7 @@ from dotenv import load_dotenv
 from urllib.parse import urlparse
 from validators import url as validator
 from datetime import date
+from bs4 import BeautifulSoup
 
 
 load_dotenv()
@@ -177,3 +178,17 @@ def url_check(id):
         flash("Неожиданная ошибка при проверке", "error")
         return redirect(url_for("url_show", id=id))
     response = requests.get(find_url(id)["name"]).raise_for_status()
+
+    status_code = response.status_code
+    soup = BeautifulSoup(response.text, "lxml")
+    h1 = soup.find("h1")
+    h1 = h1.text if h1 else ""
+    title = soup.find("title")
+    title = title.text if title else ""
+    description = soup.find("meta", {"name": "description"})
+    description = description["description"] if description else ""
+
+    check_url(id, status_code=status_code, h1=h1, title=title,
+              description=description)
+    flash("Url успешно проверен", "success")
+    return redirect(url_for("url_show", id=id))
