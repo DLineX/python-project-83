@@ -18,7 +18,7 @@ validators = "^0.34.0"
 beautifulsoup4 = "^4.12.3"
 lxml = "^5.3.0"
 requests = "^2.32.3"
-bs4 = "^4.4.0"
+bs4 = "^0.0.2"
 
 [tool.poetry.group.dev.dependencies]
 flake8 = "^7.1.1"
