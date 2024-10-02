@@ -2,9 +2,12 @@ from flask import Flask
 import os
 import psycopg2
 import requests
+from flask import (render_template, flash, request,
+                   redirect, url_for, get_flashed_messages)
 
 from dotenv import load_dotenv
 from urllib.parse import urlparse
+from validators import url as validator
 from datetime import date
 
 
@@ -90,8 +93,26 @@ def main():
     return render_template('index.html')
 
 
-# @app.route('/urls/<id>')
-# def url_show(id):
+@app.route('/urls')
+def get_urls():
+    return render_template('urls.html', urls=all_urls())
+
+
+@app.post('/urls')
+def urls_add():
+    url = normalize(request.form.get('url'))
+    if not validator(url):
+        flash("Некорректный URL", "error")
+        return render_template(
+            'index.html',
+            messages=get_flashed_messages(with_categories=True)
+        ), 422
+    if exists_url(url):
+        flash("Страница существует", "error")
+        return redirect(url_for('url_show',
+                                id=exists_url(url)))
+    flash("Страница успешно добавлена", "success")
+    return redirect(url_for('url_show', id=add_url(url)))
 
 
 @app.post('urls/<id>/checks')
