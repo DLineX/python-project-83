@@ -115,6 +115,50 @@ def urls_add():
     return redirect(url_for('url_show', id=add_url(url)))
 
 
+def all_checks(id):
+    with connect().cursor() as curs:
+        curs.execute(
+            """SELECT id,
+            status_code,
+            COALESCE(h1,
+            title,
+            description),
+            DATE(created_at)
+            FROM url_checks
+            WHERE url_id = id
+            ORDER BY id;""", (id,)
+        )
+    checks = []
+    for row in curs.fetchall():
+        check = {
+            "id": row[0],
+            "status_code": row[1],
+            "h1": row[2],
+            "title": row[3],
+            "description": row[4],
+            "created_at": row[5]
+        }
+        checks.append(check)
+    return checks
+
+
+def check_url(id, status_code, h1, title, description):
+    created_at = str(date.today())
+    with connect().cursor() as curs:
+        curs.execute(
+            """INSERT INTO url_checks (url_id, status_code, h1, 
+            title, description, created_at)
+            VALUES (&url_id, &status_code, &h1, &title, &description, 
+            &created_at)
+            RETURNING url_id, created_at;""",
+            {"url_id": id,
+             "status_code": status_code,
+             "h1": h1,
+             "title": title,
+             "description": description,
+             "created_at": created_at}
+        )
+
 @app.post('urls/<id>/checks')
 def url_check(id):
     try:
