@@ -71,12 +71,12 @@ def exists_url(url):
 def all_urls():
     with connect().cursor() as curs:
         curs.execute(
-            """SELECT 
-            urls.id, 
-            urls.name, 
-            url_checks.created_at as created_at, 
+            """SELECT
+            urls.id,
+            urls.name,
+            url_checks.created_at as created_at,
             url_checks.status_code
-            FROM urls 
+            FROM urls
             LEFT JOIN url_checks ON urls.id = url_checks.url_id
             GROUP BY urls.id, urls.name, url_checks.status_code;""")
     urls = []
@@ -156,9 +156,9 @@ def check_url(id, status_code, h1, title, description):
     created_at = str(date.today())
     with connect().cursor() as curs:
         curs.execute(
-            """INSERT INTO url_checks (url_id, status_code, h1, 
+            """INSERT INTO url_checks (url_id, status_code, h1,
             title, description, created_at)
-            VALUES (&url_id, &status_code, &h1, &title, &description, 
+            VALUES (&url_id, &status_code, &h1, &title, &description,
             &created_at)
             RETURNING url_id, created_at;""",
             {"url_id": id,
@@ -168,6 +168,7 @@ def check_url(id, status_code, h1, title, description):
              "description": description,
              "created_at": created_at}
         )
+
 
 @app.post('urls/<id>/checks')
 def url_check(id):
