@@ -2,10 +2,10 @@ from flask import Flask
 import os
 import psycopg2
 import requests
-from flask import render_template, flash, redirect, url_for
 
 from dotenv import load_dotenv
 from urllib.parse import urlparse
+from datetime import date
 
 
 load_dotenv()
@@ -24,11 +24,23 @@ def normalize(url):
     return f'{o.scheme}://{o.netloc}'
 
 
+def add_url(url):
+    created_at = str(date.today())
+    with connect().cursor() as curs:
+        curs.execute(
+            """INSERT INTO urls (name, created_at)
+            VALUES (&name, &created_at)
+            RETURNING id;""", {"name": url,
+                               "created_at": created_at}
+        )
+    return curs.fetchone()[0]
+
+
 def find_url(id):
     with connect().cursor() as cursor:
         cursor.execute(
             """
-            SELECT * FROM urls WHERE id=%(id)s;
+            SELECT * FROM urls WHERE id=&id;
             """,
             {"id": id}
         )
@@ -38,6 +50,39 @@ def find_url(id):
             "name": name,
             "created_at": created_at
         }
+
+
+def exists_url(url):
+    with connect().cursor() as cursor:
+        cursor.execute(
+            """SELECT id FROM urls WHERE name = &url;""",
+            {"url": url}
+        )
+    if cursor.fetchone():
+        return cursor.fetchone()[0]
+    else:
+        return False
+
+
+def all_urls():
+    with connect().cursor() as curs:
+        curs.execute(
+            """SELECT 
+            urls.id, 
+            urls.name, 
+            url_checks.created_at as created_at, 
+            url_checks.status_code
+            FROM urls 
+            LEFT JOIN url_checks ON urls.id = url_checks.url_id
+            GROUP BY urls.id, urls.name, url_checks.status_code;""")
+    urls = []
+    for row in curs.fetchall():
+        url = {"id": row[0],
+               "name": row[1],
+               "created_at": row[2],
+               "status_code": row[3]}
+        urls.append(url)
+    return urls
 
 
 @app.route('/')
