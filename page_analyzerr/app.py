@@ -142,6 +142,15 @@ def all_checks(id):
     return checks
 
 
+@app.route('/urls/<id>')
+def url_show(id):
+    url = find_url(id)
+    checks = all_checks(id)
+    messages = get_flashed_messages(with_categories=True)
+    return render_template("show.html", url=url,
+                           messages=messages, checks=checks)
+
+
 def check_url(id, status_code, h1, title, description):
     created_at = str(date.today())
     with connect().cursor() as curs:
@@ -167,3 +176,4 @@ def url_check(id):
         print(ex)
         flash("Неожиданная ошибка при проверке", "error")
         return redirect(url_for("url_show", id=id))
+    response = requests.get(find_url(id)["name"]).raise_for_status()
