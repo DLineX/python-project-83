@@ -62,7 +62,7 @@ def exists_url(url):
     conn = connect()
     with conn.cursor() as curs:
         curs.execute(
-            """SELECT id FROM urls WHERE name = &(url)s;""",
+            """SELECT id FROM urls WHERE name = %(url)s;""",
             {"url": url}
         )
     if curs.fetchone():
@@ -178,12 +178,12 @@ def check_url(id, status_code, h1, title, description):
 @app.post('/urls/<id>/checks')
 def url_check(id):
     try:
-        requests.get(find_url(id)["name"]).raise_for_status()
+        response = requests.get(find_url(id)["name"])
+        response.raise_for_status()
     except requests.exceptions.RequestException as ex:
         print(ex)
         flash("Неожиданная ошибка при проверке", "error")
         return redirect(url_for("url_show", id=id))
-    response = requests.get(find_url(id)["name"]).raise_for_status()
 
     status_code = response.status_code
     soup = BeautifulSoup(response.text, "lxml")
