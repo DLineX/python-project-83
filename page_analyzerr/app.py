@@ -30,7 +30,8 @@ def normalize(url):
 
 def add_url(url):
     created_at = str(date.today())
-    with connect().cursor() as curs:
+    conn = connect()
+    with conn.cursor() as curs:
         curs.execute(
             """INSERT INTO urls (name, created_at)
             VALUES (&name, &created_at)
@@ -41,14 +42,15 @@ def add_url(url):
 
 
 def find_url(id):
-    with connect().cursor() as cursor:
-        cursor.execute(
+    conn = connect()
+    with conn.cursor() as curs:
+        curs.execute(
             """
             SELECT * FROM urls WHERE id=&id;
             """,
             {"id": id}
         )
-        url_id, name, created_at = cursor.fetchone()
+        url_id, name, created_at = curs.fetchone()
         return {
             "id": url_id,
             "name": name,
@@ -57,19 +59,21 @@ def find_url(id):
 
 
 def exists_url(url):
-    with connect().cursor() as cursor:
-        cursor.execute(
+    conn = connect()
+    with conn.cursor() as curs:
+        curs.execute(
             """SELECT id FROM urls WHERE name = &url;""",
             {"url": url}
         )
-    if cursor.fetchone():
-        return cursor.fetchone()[0]
+    if curs.fetchone():
+        return curs.fetchone()[0]
     else:
         return False
 
 
 def all_urls():
-    with connect().cursor() as curs:
+    conn = connect()
+    with conn.cursor() as curs:
         curs.execute(
             """SELECT
             urls.id,
@@ -108,17 +112,16 @@ def urls_add():
             'index.html',
             messages=get_flashed_messages(with_categories=True)
         ), 422
-    id = exists_url(url)
-    if id:
+    if exists_url(url):
         flash("Страница существует", "error")
-        return redirect(url_for('url_show', id=id))
-    url_id = add_url(url)
+        return redirect(url_for('url_show', id=exists_url(url)))
     flash("Страница успешно добавлена", "success")
-    return redirect(url_for('url_show', id=url_id))
+    return redirect(url_for('url_show', id=add_url(url)))
 
 
 def all_checks(id):
-    with connect().cursor() as curs:
+    conn = connect()
+    with conn.cursor() as curs:
         curs.execute(
             """SELECT id,
             status_code,
@@ -155,7 +158,8 @@ def url_show(id):
 
 def check_url(id, status_code, h1, title, description):
     created_at = str(date.today())
-    with connect().cursor() as curs:
+    conn = connect()
+    with conn.cursor() as curs:
         curs.execute(
             """INSERT INTO url_checks (url_id, status_code, h1,
             title, description, created_at)
