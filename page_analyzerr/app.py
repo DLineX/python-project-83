@@ -67,9 +67,10 @@ def exists_url(url):
         )
         curs.close()
         new_cursor = conn.cursor()
-        new_cursor.execute("""SELECT id FROM urls
-        WHERE name %(url)s;""", {"url": url})
-        new_cursor.close()
+        new_cursor.execute(
+            """SELECT id FROM urls WHERE name %(url)s;""",
+            {"url": url}
+        )
     if curs.fetchone():
         return curs.fetchone()[0]
     else:
