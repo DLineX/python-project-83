@@ -108,12 +108,13 @@ def urls_add():
             'index.html',
             messages=get_flashed_messages(with_categories=True)
         ), 422
-    if exists_url(url):
+    id = exists_url(url)
+    if id:
         flash("Страница существует", "error")
-        return redirect(url_for('url_show',
-                                id=exists_url(url)))
+        return redirect(url_for('url_show', id=id))
+    url_id = add_url(url)
     flash("Страница успешно добавлена", "success")
-    return redirect(url_for('url_show', id=add_url(url)))
+    return redirect(url_for('url_show', id=url_id))
 
 
 def all_checks(id):
