@@ -67,8 +67,7 @@ def exists_url(url):
         )
     if curs.fetchone():
         return curs.fetchone()[0]
-    else:
-        return False
+    return False
 
 
 def all_urls():
