@@ -62,7 +62,7 @@ def exists_url(url):
     conn = connect()
     with conn.cursor() as curs:
         curs.execute(
-            """SELECT id FROM urls WHERE name = &url;""",
+            """SELECT id FROM urls WHERE name = &(url)s;""",
             {"url": url}
         )
     if curs.fetchone():
