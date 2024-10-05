@@ -38,7 +38,7 @@ def add_url(url):
             RETURNING id;""", {"name": url,
                                "created_at": created_at}
         )
-    return curs.fetchone()[0]
+        return curs.fetchone()[0]
 
 
 def find_url(id):
