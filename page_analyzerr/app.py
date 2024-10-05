@@ -157,8 +157,12 @@ def url_show(id):
     url = find_url(id)
     checks = all_checks(id)
     messages = get_flashed_messages(with_categories=True)
-    return render_template("show.html", url=url,
-                           messages=messages, checks=checks)
+    return render_template(
+        "show.html",
+        url=url,
+        messages=messages,
+        checks=checks
+    )
 
 
 def check_url(id, status_code, h1, title, description):
