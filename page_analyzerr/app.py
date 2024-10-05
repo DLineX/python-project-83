@@ -65,9 +65,9 @@ def exists_url(url):
             """SELECT id FROM urls WHERE name = %(url)s;""",
             {"url": url}
         )
-    if curs.fetchone():
-        return curs.fetchone()[0]
-    return False
+        if curs.fetchone():
+            return curs.fetchone()[0]
+        return False
 
 
 def all_urls():
