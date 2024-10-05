@@ -87,11 +87,13 @@ def all_urls():
         urls = []
         rows = curs.fetchall()
         for row in rows:
-            url = {"id": row[0],
-               "name": row[1],
-               "created_at": row[2],
-               "status_code": row[3]}
-            urls.append(url)
+            url = {
+                "id": row[0],
+                "name": row[1],
+                "created_at": row[2],
+                "status_code": row[3]
+            }
+        urls.append(url)
         return urls
 
 
@@ -135,18 +137,19 @@ def all_checks(id):
             WHERE url_id = id
             ORDER BY id;""", (id,)
         )
-    checks = []
-    for row in curs.fetchall():
-        check = {
-            "id": row[0],
-            "status_code": row[1],
-            "h1": row[2],
-            "title": row[3],
-            "description": row[4],
-            "created_at": row[5]
-        }
+        checks = []
+        rows = curs.fetchall()
+        for row in rows:
+            check = {
+                "id": row[0],
+                "status_code": row[1],
+                "h1": row[2],
+                "title": row[3],
+                "description": row[4],
+                "created_at": row[5]
+            }
         checks.append(check)
-    return checks
+        return checks
 
 
 @app.route('/urls/<id>')
