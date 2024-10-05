@@ -34,7 +34,7 @@ def add_url(url):
     with conn.cursor() as curs:
         curs.execute(
             """INSERT INTO urls (name, created_at)
-            VALUES (&name, &created_at)
+            VALUES (%(name)s, %(created_at)s)
             RETURNING id;""", {"name": url,
                                "created_at": created_at}
         )
@@ -162,8 +162,8 @@ def check_url(id, status_code, h1, title, description):
         curs.execute(
             """INSERT INTO url_checks (url_id, status_code, h1,
             title, description, created_at)
-            VALUES (&url_id, &status_code, &h1, &title, &description,
-            &created_at)
+            VALUES (%(url_id)s, %(status_code)s, %(h1)s, %(title)s,
+            %(description)s, %(created_at)s)
             RETURNING url_id, created_at;""",
             {"url_id": id,
              "status_code": status_code,
