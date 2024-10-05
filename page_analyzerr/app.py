@@ -99,7 +99,7 @@ def all_urls():
 
 @app.route('/')
 def main():
-    return render_template('index.html')
+    return render_template('form.html')
 
 
 @app.route('/urls')
