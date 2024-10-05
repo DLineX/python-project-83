@@ -19,15 +19,17 @@
   </nav>
 
 </header>
+  
 
-{% block content %}
-{% endblock %}
-
-{% if messages %}
-{% for category, message in messages %}
-<div>{{message}}</div>
-{% endfor %}  
-{% endif %}  
+  {% if messages %}
+  {% for category, message in messages %}
+  <div>{{message}}</div>
+  {% endfor %}  
+  {% endif %}       
+  <main class="flex-grow-1">  
+    {% block content %}
+    {% endblock %}
+  </main>
 
 <footer class="border-top py-3 mt-5 flex-shrink-0">
   <div class="container-lg">
