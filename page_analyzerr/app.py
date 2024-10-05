@@ -186,8 +186,9 @@ def check_url(id, status_code, h1, title, description):
 
 @app.post('/urls/<id>/checks')
 def url_check(id):
+    url = find_url(id)["name"]
     try:
-        response = requests.get(find_url(id)["name"])
+        response = requests.get(url)
         response.raise_for_status()
     except requests.exceptions.RequestException as ex:
         print(ex)
@@ -201,7 +202,7 @@ def url_check(id):
     title = soup.find("title")
     title = title.text if title else ""
     description = soup.find("meta", {"name": "description"})
-    description = description["description"] if description else ""
+    description = description["content"] if description else ""
 
     check_url(id, status_code=status_code, h1=h1, title=title,
               description=description)
