@@ -93,7 +93,7 @@ def all_urls():
                 "created_at": row[2],
                 "status_code": row[3]
             }
-        urls.append(url)
+            urls.append(url)
         return urls
 
 
@@ -148,7 +148,7 @@ def all_checks(id):
                 "description": row[4],
                 "created_at": row[5]
             }
-        checks.append(check)
+            checks.append(check)
         return checks
 
 
