@@ -50,8 +50,9 @@ def find_url(id):
             """,
             {"id": id}
         )
-        row = curs.fetchone()
-        url_id, name, created_at = row
+        url_id = curs.fetchone()
+        name = curs.fetchone()
+        created_at = curs.fetchone()
         return {
             "id": url_id,
             "name": name,
