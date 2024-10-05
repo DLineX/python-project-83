@@ -84,14 +84,14 @@ def all_urls():
             FROM urls
             LEFT JOIN url_checks ON urls.id = url_checks.url_id
             GROUP BY urls.id, urls.name, url_checks.status_code;""")
-    urls = []
-    for row in curs.fetchall():
-        url = {"id": row[0],
+        urls = []
+        for row in curs.fetchall():
+            url = {"id": row[0],
                "name": row[1],
                "created_at": row[2],
                "status_code": row[3]}
-        urls.append(url)
-    return urls
+            urls.append(url)
+        return urls
 
 
 @app.route('/')
