@@ -17,20 +17,16 @@
       </ul>
     </div>
   </nav>
-
 </header>
-  
-
-  {% if messages %}
-  {% for category, message in messages %}
-  <div>{{message}}</div>
-  {% endfor %}  
-  {% endif %}       
-  <main class="flex-grow-1">  
+  <body>
+    {% if messages %}
+    {% for category, message in messages %}
+    <div>{{message}}</div>
+    {% endfor %}  
+    {% endif %}         
     {% block content %}
     {% endblock %}
-  </main>
-
+  </body>
 <footer class="border-top py-3 mt-5 flex-shrink-0">
   <div class="container-lg">
     <div class="text-center">
