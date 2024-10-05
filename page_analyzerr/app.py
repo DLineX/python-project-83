@@ -85,7 +85,8 @@ def all_urls():
             LEFT JOIN url_checks ON urls.id = url_checks.url_id
             GROUP BY urls.id, urls.name, url_checks.status_code;""")
         urls = []
-        for row in curs.fetchall():
+        rows = curs.fetchall()
+        for row in rows:
             url = {"id": row[0],
                "name": row[1],
                "created_at": row[2],
