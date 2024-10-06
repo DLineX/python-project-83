@@ -204,7 +204,12 @@ def url_check(id):
     description = soup.find("meta", {"name": "description"})
     description = description["content"] if description else ""
 
-    check_url(id=id, status_code=status_code, h1=h1, title=title,
-              description=description)
+    check_url(
+        id,
+        status_code=status_code,
+        h1=h1,
+        title=title,
+        description=description
+    )
     flash("Url успешно проверен", "success")
     return redirect(url_for("url_show", id=id))
