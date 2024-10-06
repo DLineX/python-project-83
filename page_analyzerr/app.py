@@ -46,7 +46,7 @@ def find_url(id):
     with conn.cursor() as curs:
         curs.execute(
             """
-            SELECT * FROM urls WHERE id=%(id)s;
+            SELECT * FROM urls WHERE id=(%s);
             """,
             {"id": id}
         )
@@ -190,26 +190,25 @@ def url_check(id):
     try:
         response = requests.get(url)
         response.raise_for_status()
+        status_code = response.status_code
+        soup = BeautifulSoup(response.text, "lxml")
+        h1 = soup.find("h1")
+        h1 = h1.text if h1 else ""
+        title = soup.find("title")
+        title = title.text if title else ""
+        description = soup.find("meta", {"name": "description"})
+        description = description["content"] if description else ""
+        check_url(
+            id,
+            status_code=status_code,
+            h1=h1,
+            title=title,
+            description=description
+        )
+        flash("Url успешно проверен", "success")
+        return redirect(url_for("url_show", id=id))
     except requests.exceptions.RequestException as ex:
         print(ex)
         flash("Неожиданная ошибка при проверке", "danger")
         return redirect(url_for("url_show", id=id))
 
-    status_code = response.status_code
-    soup = BeautifulSoup(response.text, "lxml")
-    h1 = soup.find("h1")
-    h1 = h1.text if h1 else ""
-    title = soup.find("title")
-    title = title.text if title else ""
-    description = soup.find("meta", {"name": "description"})
-    description = description["content"] if description else ""
-
-    check_url(
-        id,
-        status_code=status_code,
-        h1=h1,
-        title=title,
-        description=description
-    )
-    flash("Url успешно проверен", "success")
-    return redirect(url_for("url_show", id=id))
