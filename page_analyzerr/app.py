@@ -184,7 +184,7 @@ def check_url(id, status_code, h1, title, description):
         )
 
 
-@app.post('/urls/<int:id>/checks', methods=['GET'])
+@app.post('/urls/<int:id>/checks', methods=['POST'])
 def url_check(id):
     url = find_url(id)['name']
     try:
