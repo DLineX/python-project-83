@@ -186,9 +186,9 @@ def check_url(id, status_code, h1, title, description):
 
 @app.post('/urls/<int:id>/checks')
 def url_check(id):
-    url = find_url(id)['name']
+    url = find_url(id)
     try:
-        response = requests.get(url)
+        response = requests.get(url['name'])
         response.raise_for_status()
     except requests.exceptions.RequestException as ex:
         print(ex)
