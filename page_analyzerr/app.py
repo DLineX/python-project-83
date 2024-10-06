@@ -117,7 +117,7 @@ def urls_add():
             messages=get_flashed_messages(with_categories=True)
         ), 422
     if exists_url(url):
-        flash("Страница существует", "error")
+        flash("Страница существует", "info")
         return redirect(url_for('url_show', id=exists_url(url)))
     flash("Страница успешно добавлена", "success")
     return redirect(url_for('url_show', id=add_url(url)))
