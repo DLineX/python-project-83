@@ -186,13 +186,13 @@ def check_url(id, status_code, h1, title, description):
 
 @app.post('/urls/<int:id>/checks')
 def url_check(id):
-    url = find_url(id)
+    url = find_url(id)['name']
     try:
-        response = requests.get(url['name'])
+        response = requests.get(url)
         response.raise_for_status()
     except requests.exceptions.RequestException as ex:
         print(ex)
-        flash("Неожиданная ошибка при проверке", "error")
+        flash("Неожиданная ошибка при проверке", "danger")
         return redirect(url_for("url_show", id=id))
 
     status_code = response.status_code
