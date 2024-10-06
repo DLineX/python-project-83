@@ -48,7 +48,7 @@ def find_url(id):
             """
             SELECT * FROM urls WHERE id=(%s);
             """,
-            {"id": id}
+            (id,)
         )
         url_id = curs.fetchone()
         name = curs.fetchone()
@@ -211,4 +211,3 @@ def url_check(id):
         print(ex)
         flash("Неожиданная ошибка при проверке", "danger")
         return redirect(url_for("url_show", id=id))
-
