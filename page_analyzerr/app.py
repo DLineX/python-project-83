@@ -184,7 +184,7 @@ def check_url(id, status_code, h1, title, description):
         )
 
 
-@app.post('/urls/<int:id>/checks', methods=['POST'])
+@app.post('/urls/<int:id>/checks')
 def url_check(id):
     url = find_url(id)['name']
     try:
@@ -204,7 +204,7 @@ def url_check(id):
     description = soup.find("meta", {"name": "description"})
     description = description["content"] if description else ""
 
-    check_url(id, status_code=status_code, h1=h1, title=title,
+    check_url(status_code=status_code, h1=h1, title=title,
               description=description)
     flash("Url успешно проверен", "success")
     return redirect(url_for("url_show", id=id))
