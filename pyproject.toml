@@ -9,15 +9,15 @@ packages = [
 ]
 
 [tool.poetry.dependencies]
-python = "^3.12"
-Flask = "^3.0.3"
-gunicorn = "^23.0.0"
-python-dotenv = "^1.0.1"
-psycopg2-binary = "^2.9.9"
-validators = "^0.34.0"
-lxml = "^5.3.0"
-requests = "^2.32.3"
-bs4 = "^0.0.2"
+python = "^3.11"
+Flask = { version = "^3.0.3", markers = "python_version <= '3.11'" }
+gunicorn = { version = "^23.0.0", markers = "python_version <= '3.11'" }
+python-dotenv = { version = "^1.0.1", markers = "python_version <= '3.11'" }
+psycopg2-binary = { version = "^2.9.9", markers = "python_version <= '3.11'" }
+validators = { version = "^0.34.0", markers = "python_version <= '3.11'" }
+lxml = { version = "^5.3.0", markers = "python_version <= '3.11'" }
+requests = { version = "^2.32.3", markers = "python_version <= '3.11'" }
+bs4 = { version = "^0.0.2", markers = "python_version <= '3.11'" }
 
 [tool.poetry.group.dev.dependencies]
 flake8 = "^7.1.1"
