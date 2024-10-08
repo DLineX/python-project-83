@@ -18,7 +18,7 @@
     </div>
   </nav>
 </header>
-  <body>
+  
     {% if messages %}
     {% for category, message in messages %}
     <div>{{message}}</div>
@@ -26,6 +26,6 @@
     {% endif %}         
     {% block content %}
     {% endblock %}
-  </body>
+  
 </body>
 </html>
