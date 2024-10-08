@@ -9,7 +9,7 @@ packages = [
 ]
 
 [tool.poetry.dependencies]
-python = "^3.11.9"
+python = ">=3.11.9,<4.0"
 flake8 = "^7.1.1"
 Flask = "^3.0.3"
 gunicorn = "^23.0.0"
