@@ -1,5 +1,5 @@
 install:
-	python -m pip install -r requirements.txt
+	poetry install
 build:
 	./build.sh
 dev:
