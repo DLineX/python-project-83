@@ -192,6 +192,7 @@ def url_check(id):
         response.raise_for_status()
         status_code = response.status_code
         soup = BeautifulSoup(response.text, "lxml")
+        id = soup['url_id']
         h1 = soup.find("h1")
         h1 = h1.text if h1 else ""
         title = soup.find("title")
