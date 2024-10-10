@@ -51,14 +51,14 @@ def find_url(id):
             {'id': id}
         )
         row = curs.fetchone()
-        url_id = row
-        name = row
-        created_at = row
-        return {
-            "id": url_id,
-            "name": name,
-            "created_at": created_at
-        }
+    url_id = row
+    name = row
+    created_at = row
+    return {
+        "id": url_id,
+        "name": name,
+        "created_at": created_at
+    }
 
 
 def exists_url(url):
@@ -214,4 +214,3 @@ def url_check(id):
     )
     flash("Url успешно проверен", "success")
     return redirect(url_for("url_show", id=id))
-
