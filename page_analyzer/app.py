@@ -187,9 +187,9 @@ def check_url(id, status_code, h1, title, description):
 
 @app.post('/urls/<int:id>/checks')
 def url_check(id):
-    url = find_url(id)
+    url = find_url(id)['name']
     try:
-        response = requests.get(url["name"])
+        response = requests.get(url)
         response.raise_for_status()
         status_code = response.status_code
         soup = BeautifulSoup(response.text, "lxml")
