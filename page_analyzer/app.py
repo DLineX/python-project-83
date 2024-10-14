@@ -46,7 +46,7 @@ def find_url(id):
     with conn.cursor() as curs:
         curs.execute(
             """
-            SELECT * FROM urls WHERE id=(%s);
+            SELECT * FROM urls WHERE id=%(id)s;
             """,
             {'id': id})
         url_id = curs.fetchone()
