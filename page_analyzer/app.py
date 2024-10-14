@@ -48,15 +48,15 @@ def find_url(id):
             """
             SELECT * FROM urls WHERE id=(%s);
             """,
-            {'id': id}
-        )
-        rows = curs.fetchone()
-        (url_id, name, created_at) = rows
-        return {
-            "id": url_id,
-            "name": name,
-            "created_at": created_at
-        }
+            {'id': id})
+        url_id = curs.fetchone()
+        name = curs.fetchone()
+        created_at = curs.fetchone()
+    return {
+        "id": url_id,
+        "name": name,
+        "created_at": created_at
+    }
 
 
 def exists_url(url):
@@ -197,18 +197,15 @@ def url_check(id):
         title = title.text if title else ""
         description = soup.find("meta", {"name": "description"})
         description = description["content"] if description else ""
-
-    except requests.exceptions.RequestException as ex:
-        print(ex)
-        flash("Неожиданная ошибка при проверке", "danger")
+        check_url(
+            id,
+            status_code=status_code,
+            h1=h1,
+            title=title,
+            description=description
+        )
+        flash("Url успешно проверен", "success")
+    except requests.exceptions.RequestException:
+        flash("Произошла ошибка при проверке", "danger")
+    finally:
         return redirect(url_for("url_show", id=id))
-
-    check_url(
-        id,
-        status_code=status_code,
-        h1=h1,
-        title=title,
-        description=description
-    )
-    flash("Url успешно проверен", "success")
-    return redirect(url_for("url_show", id=id))
