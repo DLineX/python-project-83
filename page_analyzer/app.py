@@ -52,11 +52,11 @@ def find_url(id):
         url_id = curs.fetchone()
         name = curs.fetchone()
         created_at = curs.fetchone()
-    return {
-        "id": url_id,
-        "name": name,
-        "created_at": created_at
-    }
+        return {
+            "id": url_id,
+            "name": name,
+            "created_at": created_at
+        }
 
 
 def exists_url(url):
@@ -66,8 +66,9 @@ def exists_url(url):
             """SELECT id FROM urls WHERE name = %(url)s;""",
             {"url": url}
         )
-        if curs.fetchone():
-            return curs.fetchone()[0]
+        id = curs.fetchone()
+        if id:
+            return id[0]
         return False
 
 
@@ -133,7 +134,7 @@ def all_checks(id):
             description),
             DATE(created_at)
             FROM url_checks
-            WHERE url_id = id
+            WHERE url_id = %s
             ORDER BY id;""", (id,)
         )
         checks = []
