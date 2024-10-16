@@ -23,7 +23,7 @@ def add_url(url):
     conn = connect()
     with conn.cursor(cursor_factory=NamedTupleCursor) as curs:
         curs.execute(
-            """INSERT INTO urls (name, created_at)
+            """INSERT INTO urls (name)
             VALUES (%s)
             RETURNING id;""", (str(url),)
         )
