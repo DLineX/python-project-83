@@ -60,7 +60,7 @@ def all_urls():
             urls.id,
             urls.name,
             url_checks.created_at as date,
-            url_checks.status_code
+            url_checks.status_code,
             MAX(url_checks.url_id)
             FROM urls
             LEFT JOIN url_checks ON urls.id = url_checks.url_id
