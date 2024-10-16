@@ -54,18 +54,14 @@ def find_url(id):
         return curs.fetchone()
 
 
-def exists_url(url):
+def exists_url(name):
     conn = connect()
-    with conn.cursor() as curs:
+    with conn.cursor(cursor_factory=NamedTupleCursor) as curs:
         curs.execute(
-            """SELECT id FROM urls WHERE name = %(url)s;""",
-            {"url": url}
+            """SELECT id FROM urls WHERE name = (%s);""",
+            (name,)
         )
-        id = curs.fetchone()
-        if id:
-            return id
-        else:
-            return False
+        return curs.fetchone()
 
 
 def all_urls():
@@ -106,10 +102,10 @@ def urls_add():
             url=url
         ), 422
     url = normalize(url)
-    url_finds = exists_url(url)
-    if url_finds:
+    url_found = exists_url(url)
+    if url_found:
         flash("Страница существует", "info")
-        id = url_finds.id
+        id = url_found.id
         return redirect(url_for('url_show', id=id))
     else:
         id = add_url(url)
