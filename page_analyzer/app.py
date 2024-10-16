@@ -39,7 +39,7 @@ def urls_add():
     url = normalize(url)
     url_found = exists_url(url)
     if url_found:
-        flash("Страница существует", "info")
+        flash("Страница уже существует", "info")
         id = url_found.id
         return redirect(url_for('url_show', id=id))
     else:
