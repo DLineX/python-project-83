@@ -84,10 +84,9 @@ def check_url(all_data):
     with conn.cursor(cursor_factory=NamedTupleCursor) as curs:
         curs.execute(
             """INSERT INTO url_checks (url_id, status_code, h1,
-            title, description, created_at)
+            title, description)
             VALUES (%(url_id)s, %(status_code)s, %(h1)s, %(title)s,
-            %(description)s, %(created_at)s)
-            RETURNING url_id, created_at;""",
+            %(description)s);""",
             all_data
         )
         conn.commit()

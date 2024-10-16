@@ -27,7 +27,7 @@
         </form>
         <div>
             <table class="table table-bordered table-hover mt-2" data-test="checks">
-                <tbody>
+                <thead>
                     <tr>
                         <th>id</th>
                         <th>Код ответа</th>
@@ -36,16 +36,20 @@
                         <th>description</th>
                         <th>Время проверки</th>
                     </tr>
-                    {% for check in url_check %}
-                    <tr>
-                        <td>{{check.id}}</td>
-                        <td>{{check.status_code}}</td>
-                        <td>{{check.h1}}</td>
-                        <td>{{check.title}}</td>
-                        <td>{{check.description}}</td>
-                        <td>{{check.created_at}}</td>
-                    </tr>
-                    {% endfor %}
+                </thead>
+                <tbody>
+                    {% if url_check %}
+                        {% for check in url_check %}
+                        <tr>
+                            <td>{{check.id}}</td>
+                            <td>{{check.status_code}}</td>
+                            <td>{{check.h1}}</td>
+                            <td>{{check.title}}</td>
+                            <td>{{check.description}}</td>
+                            <td>{{check.created_at}}</td>
+                        </tr>
+                        {% endfor %}
+                    {% endif %}
                 </tbody>
             </table>
         </div>

@@ -34,6 +34,7 @@ def urls_add():
         flash("Некорректный URL", "danger")
         return render_template(
             'form.html',
+            messages=get_flashed_messages(with_categories=True),
             url=url
         ), 422
     url = normalize(url)
