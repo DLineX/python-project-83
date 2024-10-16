@@ -1,6 +1,6 @@
 {% extends "index.html" %}
 {% block content %}
-<body class="flex-grow-1">
+<main class="flex-grow-1">
     <div class="container-lg mt-3">
         <h2>Сайт: {{url.name}}</h2>
         <div class="table-responsive">
@@ -36,10 +36,10 @@
                         <th>description</th>
                         <th>Время проверки</th>
                     </tr>
-                    {% for check in checks %}
+                    {% for check in url_check %}
                     <tr>
                         <td>{{check.id}}</td>
-                        <td>{{check.response_code}}</td>
+                        <td>{{check.status_code}}</td>
                         <td>{{check.h1}}</td>
                         <td>{{check.title}}</td>
                         <td>{{check.description}}</td>
@@ -50,5 +50,5 @@
             </table>
         </div>
     </div>
-</body>
+</main>
 {% endblock %}

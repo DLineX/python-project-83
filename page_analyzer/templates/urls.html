@@ -1,6 +1,6 @@
 {% extends "index.html" %}
 {% block content %}
-<body class="flex-grow-1">
+<main class="flex-grow-1">
     <div class="container-lg mt-3">
         <h1>Сайты</h1>
         <div class="table-responsive">
@@ -15,14 +15,14 @@
                     {% for url in urls %}
                     <tr>
                         <td>{{url.id}}</td>
-                        <td><a href="/urls/{{url.id}}">{{url.name}}</a></td>
-                        <td>{{url.date}}</td>
-                        <td>{{url.status_code}}</td>
+                        <td><a href="{{ url_for('url_show', id=url.id) }}">{{url.name}}</a></td>
+                        <td>{{url.date or ''}}</td>
+                        <td>{{url.status_code or ''}}</td>
                     </tr>
                     {% endfor %}
                 </tbody>
             </table>
         </div>
     </div>
-</body>
+</main>
 {% endblock %}
