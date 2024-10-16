@@ -70,7 +70,7 @@ def url_check(id):
         all_data = beautiful_soup(response.text)
         all_data['status_code'] = response.status_code
         all_data['url_id'] = id
-        flash("Url успешно проверен", "success")
+        flash("Страница успешно проверена", "success")
         check_url(all_data)
     except requests.exceptions.RequestException:
         flash("Произошла ошибка при проверке", "danger")
