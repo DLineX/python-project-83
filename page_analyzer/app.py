@@ -32,12 +32,11 @@ def normalize(url):
 def add_url(url):
     created_at = str(date.today())
     conn = connect()
-    with conn.cursor() as curs:
+    with conn.cursor(cursor_factory=NamedTupleCursor) as curs:
         curs.execute(
             """INSERT INTO urls (name, created_at)
-            VALUES (%(name)s, %(created_at)s)
-            RETURNING id;""", {"name": url,
-                               "created_at": created_at}
+            VALUES (%s)
+            RETURNING id;""", (str(url), str(created_at),)
         )
         conn.commit()
         return curs.fetchone()
@@ -45,12 +44,12 @@ def add_url(url):
 
 def find_url(id):
     conn = connect()
-    with conn.cursor() as curs:
+    with conn.cursor(cursor_factory=NamedTupleCursor) as curs:
         curs.execute(
             """
-            SELECT * FROM urls WHERE id=%(id)s;
+            SELECT * FROM urls WHERE id=(%s);
             """,
-            {'id': id})
+            (id,))
         return curs.fetchone()
 
 
