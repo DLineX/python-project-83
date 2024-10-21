@@ -10,7 +10,6 @@ packages = [
 
 [tool.poetry.dependencies]
 python = ">=3.10,<4.0"
-flake8 = "^7.1.1"
 Flask = "^3.0.3"
 gunicorn = "^23.0.0"
 python-dotenv = "^1.0.1"
@@ -20,6 +19,8 @@ requests = "^2.32.3"
 bs4 = "^0.0.2"
 lxml = "^5.3.0"
 
+[tool.poetry.group.dev.dependencies]
+flake8 = "^7.1.1"
 
 [build-system]
 requires = ["poetry-core"]
