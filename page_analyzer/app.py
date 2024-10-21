@@ -6,7 +6,7 @@ from flask import (render_template, flash, request,
 
 from dotenv import load_dotenv
 import validators
-from .func import (add_url, find_url, exists_url, all_urls,
+from .db import (add_url, find_url, exists_url, all_urls,
                    all_checks, check_url, beautiful_soup, normalize)
 
 
